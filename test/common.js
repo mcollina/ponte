@@ -16,6 +16,9 @@ global.globalLogger = bunyan.createLogger({
 
 global.ponteSettings = function() {
   return {
+    rest: {
+      port: nextPort()
+    },
     mqtt: {
       port: nextPort(),
       logger: {
