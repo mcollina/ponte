@@ -14,17 +14,17 @@ global.globalLogger = bunyan.createLogger({
   level: 60
 });
 
-global.moscaSettings = function() {
+global.ponteSettings = function() {
   return {
-    port: nextPort(),
-    logger: {
-      name: "moscaTests",
-      level: 60
+    mqtt: {
+      port: nextPort(),
+      logger: {
+        name: "moscaTests",
+        level: 60
+      }
     }
   };
 };
 
 var sinonChai = require("sinon-chai");
 chai.use(sinonChai);
-
-global.ponte = require("../");
