@@ -1,6 +1,7 @@
 
 var request = require("supertest");
 var ponte = require("../");
+var mqtt = require("mqtt");
 
 describe("Ponte as a REST API", function() {
 
@@ -38,6 +39,27 @@ describe("Ponte as a REST API", function() {
         request(instance.rest.http)
           .get("/topics/hello")
           .expect(200, "hello world", done);
+      });
+  });
+
+  it("should publish a value to MQTT after PUT", function(done) {
+    mqtt.createClient(settings.mqtt.port)
+
+      .subscribe("hello", function() {
+        request(instance.rest.http)
+          .put("/topics/hello")
+          .send("world")
+          .end(function(err) {
+            if (err) {
+              done(err);
+            }
+          });
+      })
+
+      .on("message", function(topic, payload) {
+        expect(topic).to.eql("hello");
+        expect(payload).to.eql("world");
+        done();
       });
   });
 });
