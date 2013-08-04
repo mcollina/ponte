@@ -9,22 +9,17 @@ global.nextPort = function() {
 
 var bunyan = require("bunyan");
 
-global.globalLogger = bunyan.createLogger({
-  name: "moscaTests",
-  level: 60
-});
-
 global.ponteSettings = function() {
   return {
+    logger: {
+      name: "ponteTests",
+      level: 60
+    },
     rest: {
       port: nextPort()
     },
     mqtt: {
-      port: nextPort(),
-      logger: {
-        name: "moscaTests",
-        level: 60
-      }
+      port: nextPort()
     }
   };
 };

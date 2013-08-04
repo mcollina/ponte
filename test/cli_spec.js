@@ -72,4 +72,26 @@ describe("ponte.cli", function() {
       expect(server.options.mqtt.port).to.be.eql(3042);
     });
   });
+
+  it("should support a verbose option by setting the bunyan level to 30", function(done) {
+    args.push("-v");
+    var s = startServer(done, function(server) {
+      expect(server.logger.level()).to.equal(30);
+    });
+
+    if (s.logger) {
+      s.logger.streams.pop();
+    }
+  });
+
+  it("should support a very verbose option by setting the bunyan level to 20", function(done) {
+    args.push("--very-verbose");
+    var s = startServer(done, function(server) {
+      expect(server.logger.level()).to.equal(20);
+    });
+
+    if (s.logger) {
+      s.logger.streams.pop();
+    }
+  });
 });
