@@ -87,7 +87,7 @@ $ curl http://localhost:3000/topics/hello-from-mqtt
 world
 ```
 
-# Configuration
+## Configuration
 
 TO BE DONE!
 
@@ -138,6 +138,14 @@ months:
 * [ ] Standalone persistence layer.
 
 Any help is very welcome, so feel free to submit a pull-request.
+
+## Eclipse, QEST and Ponte
+
+Ponte is a proposal at Eclipse, and this is a pure-JS rewrite of
+[QEST](http://github.com/mcollina/qest) in Javascript and on top of
+[Mosca](http://github.com/mcollina/mosca). 
+You can find the Eclipse Project Proposal here:
+http://eclipse.org/proposals/technology.ponte/
 
 ## Contributing to Ponte
 
