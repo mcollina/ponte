@@ -22,8 +22,8 @@ Ponte is a node.js application, so it needs [node.js](http://nodejs.org)
 to run.
 
 ```
-$: npm install ponte bunyan -g
-$: ponte -v | bunyan
+$ npm install ponte bunyan -g
+$ ponte -v | bunyan
 ```
 
 Then you can connect to it with your preferred [MQTT](http://mqtt.org)
@@ -48,7 +48,46 @@ $ ./bin/ponte --help
     --very-verbose       set the bunyan log to DEBUG
 ```
 
-## Configuration
+## Usage Example
+
+Start ponte:
+```
+$ ponte -v | bunyan
+```
+
+### Publishing from HTTP to MQTT
+
+Publish from HTTP:
+```
+$ curl -X PUT -d 'world' http://localhost:3000/topics/hello
+```
+
+The messages from HTTP are _retained_, which means that are sent to
+every new subscriber.
+
+Subscribe using `mosquitto_sub` ([mosquitto](http://mosquitto.org)):
+```
+$ mosquitto_sub -t "hello" -v
+hello world
+```
+
+### Publishing from MQTT to HTTP
+
+In order to publish a message that can be read from HTTP,
+a MQTT client needs to set the _retain_ flag.
+This is how it is done using `mosquitto_pub`:
+
+```
+$ mosquitto_pub -t hello-from-mqtt -m "world" -r
+```
+
+Reading the published value is an HTTP GET away:
+```
+$ curl http://localhost:3000/topics/hello-from-mqtt
+world
+```
+
+# Configuration
 
 TO BE DONE!
 
@@ -87,12 +126,18 @@ by using the `--db` option from the command line.
 
 ## To do
 
+These are the new features you should expect in the coming
+months:
+
 * [ ] Better bootstrap sequence.
+* [ ] Add Web Hooks support.
 * [ ] Document configuration options.
 * [ ] Add WebSocket and Server-Sent Events support.
 * [ ] Add a Web App for reading and writing.
 * [ ] Add CoAP support.
 * [ ] Standalone persistence layer.
+
+Any help is very welcome, so feel free to submit a pull-request.
 
 ## Contributing to Ponte
 
