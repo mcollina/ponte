@@ -8,8 +8,13 @@ __Ponte__ is a multi-transport Internet of Things / Machine to Machine broker.
 As the current state it supports [MQTT](http://mqtt.org/) and REST
 APIs.
 
-__Ponte__ is still under active development, but it should work :).
-Let me know if you plan to use __Ponte__ in production.
+![Ponte Architecture](./architecture.png)
+
+__Ponte__ is under active development, but it should work :).
+If you plan to use Mosca in production
+[let us know](http://twitter.com/matteocollina), we'll be more than
+happy to help you getting started and solve any issue you'll find out.
+
 
 ## Installation 
 
@@ -23,6 +28,25 @@ $: ponte -v | bunyan
 
 Then you can connect to it with your preferred [MQTT](http://mqtt.org)
 client.
+
+### Command Line Options
+
+```
+$ ./bin/ponte --help
+
+  Usage: ponte [options]
+
+  Options:
+
+    -h, --help           output usage information
+    -V, --version        output the version number
+    -m, --mqtt-port <n>  the mqtt port to listen to
+    -p, --http-port <n>  the hqtt port to listen to
+    -c, --config <c>     the config file to use (override every other
+     option)
+    -v, --verbose        set the bunyan log to INFO
+    --very-verbose       set the bunyan log to DEBUG
+```
 
 ## Configuration
 
@@ -63,6 +87,8 @@ by using the `--db` option from the command line.
 
 ## To do
 
+* [ ] Better bootstrap sequence.
+* [ ] Document configuration options.
 * [ ] Add WebSocket and Server-Sent Events support.
 * [ ] Add a Web App for reading and writing.
 * [ ] Add CoAP support.
