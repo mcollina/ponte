@@ -94,4 +94,28 @@ describe("ponte.cli", function() {
       s.logger.streams.pop();
     }
   });
+
+  it("should support a config option (short)", function(done) {
+    args.push("-c");
+    args.push("test/sample_config.js");
+    startServer(done, function(server) {
+      expect(server.options.logger).to.have.property("name", "Config Test Logger");
+    });
+  });
+
+  it("should support a config option (long)", function(done) {
+    args.push("--config");
+    args.push("test/sample_config.js");
+    startServer(done, function(server) {
+      expect(server.options.logger).to.have.property("name", "Config Test Logger");
+    });
+  });
+
+  it("should support a config option with an absolute path", function(done) {
+    args.push("-c");
+    args.push(process.cwd() + "/test/sample_config.js");
+    startServer(done, function(server) {
+      expect(server.options.logger).to.have.property("name", "Config Test Logger");
+    });
+  });
 });
