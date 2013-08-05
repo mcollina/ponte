@@ -42,6 +42,7 @@ $ ./bin/ponte --help
     -V, --version        output the version number
     -m, --mqtt-port <n>  the mqtt port to listen to
     -p, --http-port <n>  the hqtt port to listen to
+    -d, --db <path>      the path were to store the database
     -c, --config <c>     the config file to use (override every other
      option)
     -v, --verbose        set the bunyan log to INFO
@@ -130,6 +131,7 @@ These are the new features you should expect in the coming
 months:
 
 * [ ] Better bootstrap sequence.
+* [ ] Allow and document embedding inside other Node apps.
 * [ ] Add Web Hooks support.
 * [ ] Document configuration options.
 * [ ] Add WebSocket and Server-Sent Events support.

@@ -1,6 +1,8 @@
 
 var ponte = require("../");
 var async = require("async");
+var tmp   = require("tmp");
+var mosca = require("mosca");
 
 describe("ponte.cli", function() {
 
@@ -116,6 +118,24 @@ describe("ponte.cli", function() {
     args.push(process.cwd() + "/test/sample_config.js");
     startServer(done, function(server) {
       expect(server.options.logger).to.have.property("name", "Config Test Logger");
+    });
+  });
+
+  it("should create a leveldb with the --db flag", function(done) {
+
+    tmp.dir(function (err, path, fd) {
+      if (err) {
+        done(err);
+        return;
+      }
+
+      args.push("--db");
+      args.push(path);
+
+      startServer(done, function(server) {
+        expect(server.persistence).to.be.instanceOf(mosca.persistence.LevelUp);
+        expect(server.persistence.options.path).to.eql(path);
+      });
     });
   });
 });
