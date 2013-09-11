@@ -11,7 +11,7 @@ APIs.
 ![Ponte Architecture](./architecture.png)
 
 __Ponte__ is under active development, but it should work :).
-If you plan to use Mosca in production
+If you plan to use Ponte in production
 [let us know](http://twitter.com/matteocollina), we'll be more than
 happy to help you getting started and solve any issue you'll find out.
 
