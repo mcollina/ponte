@@ -1,0 +1,106 @@
+var ponte = require("../");
+var mqtt = require("mqtt");
+var coap = require("coap");
+var callback = require("callback-stream");
+
+describe("Ponte as a CoAP API", function() {
+
+  var settings;
+  var instance;
+
+  beforeEach(function(done) {
+    settings = ponteSettings();
+    instance = ponte(settings, done);
+  });
+
+  afterEach(function(done) {
+    instance.close(done);
+  });
+
+  it("should GET an unknown topic and return a 4.04", function(done) {
+    var req = coap.request({
+      port: settings.coap.port,
+      pathname: "/topics/hello"
+    }).end();
+
+    req.on('response', function(res) {
+      expect(res.code).to.eql('4.04');
+      done();
+    });
+  });
+
+  it("should PUT a topic and return a 2.04 (changed)", function(done) {
+    var req = coap.request({
+      port: settings.coap.port,
+      pathname: "/topics/hello",
+      method: 'PUT'
+    }).end('hello world');
+
+    req.on('response', function(res) {
+      expect(res.code).to.eql('2.04');
+      done();
+    });
+  });
+
+  it("should PUT a topic and return a 2.04 (changed) if the topic existed", function(done) {
+    var req = coap.request({
+      port: settings.coap.port,
+      pathname: "/topics/hello",
+      method: 'PUT'
+    }).end('hello world')
+
+    req.on('response', function(res) {
+      req = coap.request({
+        port: settings.coap.port,
+        pathname: "/topics/hello",
+        method: 'PUT'
+      }).end('hello matteo');
+
+      req.on('response', function(res) {
+        expect(res.code).to.eql('2.04');
+        done();
+      });
+    });
+  });
+
+  it("should PUT and GET a topic and its payload", function(done) {
+    var req = coap.request({
+      port: settings.coap.port,
+      pathname: "/topics/hello",
+      method: 'PUT'
+    }).end('hello world');
+
+    req.on('response', function(res) {
+      req = coap.request({
+        port: settings.coap.port,
+        pathname: "/topics/hello",
+      }).end();
+
+      req.on('response', function(res) {
+        expect(res.code).to.eql('2.05');
+
+        res.pipe(callback(function(err, data) {
+          expect(data.toString()).to.eql('hello world');
+          done();
+        }));
+      });
+    })
+  });
+
+  it("should publish a value to MQTT after PUT", function(done) {
+    mqtt.createClient(settings.mqtt.port)
+        .subscribe("hello", function() {
+          var req = coap.request({
+            port: settings.coap.port,
+            pathname: "/topics/hello",
+            method: 'PUT'
+          }).end('world');
+        })
+
+        .on("message", function(topic, payload) {
+          expect(topic).to.eql("hello");
+          expect(payload).to.eql("world");
+          done();
+        });
+  });
+});

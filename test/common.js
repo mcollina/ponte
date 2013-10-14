@@ -18,6 +18,9 @@ global.ponteSettings = function() {
     rest: {
       port: nextPort()
     },
+    coap: {
+      port: nextPort()
+    },
     mqtt: {
       port: nextPort()
     }

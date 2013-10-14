@@ -3,7 +3,7 @@ var request = require("supertest");
 var ponte = require("../");
 var mqtt = require("mqtt");
 
-describe("Ponte as a REST API", function() {
+describe("Ponte as an HTTP API", function() {
 
   var settings;
   var instance;
