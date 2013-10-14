@@ -116,4 +116,46 @@ describe("Ponte as a CoAP API", function() {
           done();
         });
   });
+
+  it("should allow to observe topics", function(done) {
+    var req = coap.request({
+      port: settings.coap.port,
+      pathname: "/topics/hello",
+      method: 'PUT'
+    }).end('abcdef')
+    var req2
+
+    req.on('response', function(res) {
+
+      req2 = coap.request({
+        port: settings.coap.port,
+        pathname: "/topics/hello",
+        method: 'GET',
+        observe: true
+      });
+
+      req2.on('error', function(err) {
+        console.log(err);
+        console.log(err.stack);
+      });
+      req2.end();
+
+      req2.on('response', function(res) {
+        mqtt.createClient(settings.mqtt.port)
+            .publish("hello", "world", { retain: true })
+            .publish("hello", "matteo", { retain: true })
+            .end();
+
+        res.once('data', function(data) {
+          expect(data.toString()).to.eql('abcdef');
+          res.once('data', function(data) {
+            expect(data.toString()).to.eql('world');
+            res.once('data', function(data) {
+              done()
+            });
+          });
+        });
+      });
+    });
+  });
 });
