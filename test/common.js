@@ -15,7 +15,7 @@ global.ponteSettings = function() {
       name: "ponteTests",
       level: 60
     },
-    rest: {
+    http: {
       port: nextPort()
     },
     coap: {

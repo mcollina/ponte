@@ -18,25 +18,25 @@ describe("Ponte as an HTTP API", function() {
   });
 
   it("should GET an unknown topic and return a 404", function(done) {
-    request(instance.rest.http)
+    request(instance.http.server)
       .get("/topics/hello")
       .expect(404, done);
   });
 
   it("should PUT a topic and return a 204", function(done) {
-    request(instance.rest.http)
+    request(instance.http.server)
       .put("/topics/hello")
       .send("hello world")
       .expect(204, done);
   });
 
   it("should PUT and GET a topic and its payload", function(done) {
-    request(instance.rest.http)
+    request(instance.http.server)
       .put("/topics/hello")
       .set("content-type", "text/plain")
       .send("hello world")
       .expect(204, function() {
-        request(instance.rest.http)
+        request(instance.http.server)
           .get("/topics/hello")
           .expect(200, "hello world", done);
       });
@@ -46,7 +46,7 @@ describe("Ponte as an HTTP API", function() {
     mqtt.createClient(settings.mqtt.port)
 
       .subscribe("hello", function() {
-        request(instance.rest.http)
+        request(instance.http.server)
           .put("/topics/hello")
           .send("world")
           .end(function(err) {

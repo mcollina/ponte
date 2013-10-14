@@ -47,7 +47,7 @@ describe("ponte.cli", function() {
     args.push("-p");
     args.push("3042");
     startServer(done, function(server) {
-      expect(server.options.rest.port).to.be.eql(3042);
+      expect(server.options.http.port).to.be.eql(3042);
     });
   });
 
@@ -63,7 +63,7 @@ describe("ponte.cli", function() {
     args.push("--http-port");
     args.push("3042");
     startServer(done, function(server) {
-      expect(server.options.rest.port).to.be.eql(3042);
+      expect(server.options.http.port).to.be.eql(3042);
     });
   });
 
