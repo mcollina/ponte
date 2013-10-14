@@ -42,6 +42,19 @@ describe("Ponte as a CoAP API", function() {
     });
   });
 
+  it("should PUT a topic and set a 'Location-Path' option", function(done) {
+    var req = coap.request({
+      port: settings.coap.port,
+      pathname: "/topics/hello",
+      method: 'PUT'
+    }).end('hello world');
+
+    req.on('response', function(res) {
+      expect(res.headers).to.have.property('Location-Path', '/topics/hello');
+      done();
+    });
+  });
+
   it("should PUT a topic and return a 2.04 (changed) if the topic existed", function(done) {
     var req = coap.request({
       port: settings.coap.port,
