@@ -30,6 +30,13 @@ describe("Ponte as an HTTP API", function() {
       .expect(204, done);
   });
 
+  it("should PUT a topic and return a Location header", function(done) {
+    request(instance.http.server)
+      .put("/topics/hello")
+      .send("hello world")
+      .expect('Location', '/topics/hello', done)
+  });
+
   it("should PUT and GET a topic and its payload", function(done) {
     request(instance.http.server)
       .put("/topics/hello")
