@@ -59,6 +59,14 @@ describe("ponte.cli", function() {
     });
   });
 
+  it("should start a ponte on a specific CoAP port", function(done) {
+    args.push("-a");
+    args.push("3043");
+    startServer(done, function(server) {
+      expect(server.options.coap.port).to.be.eql(3043);
+    });
+  });
+
   it("should start a ponte on a specific HTTP port (long)", function(done) {
     args.push("--http-port");
     args.push("3042");
@@ -72,6 +80,14 @@ describe("ponte.cli", function() {
     args.push("3042");
     startServer(done, function(server) {
       expect(server.options.mqtt.port).to.be.eql(3042);
+    });
+  });
+
+  it("should start a ponte on a specific CoAP port (long)", function(done) {
+    args.push("--coap-port");
+    args.push("3043");
+    startServer(done, function(server) {
+      expect(server.options.coap.port).to.be.eql(3043);
     });
   });
 
