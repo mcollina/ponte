@@ -1,6 +1,6 @@
 {
   "name": "ponte",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "An M2M/IoT bridge for REST developers",
   "main": "index.js",
   "bin": {
