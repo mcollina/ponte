@@ -26,8 +26,9 @@ $ npm install ponte bunyan -g
 $ ponte -v | bunyan
 ```
 
-Then you can connect to it with your preferred [MQTT](http://mqtt.org)
-client.
+Then you can connect to it with your preferred [MQTT](http://mqtt.org),
+[CoAP](https://datatracker.ietf.org/doc/draft-ietf-core-coap/) or
+[HTTP](http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol) client.
 
 ### Command Line Options
 
@@ -41,7 +42,8 @@ $ ./bin/ponte --help
     -h, --help           output usage information
     -V, --version        output the version number
     -m, --mqtt-port <n>  the mqtt port to listen to
-    -p, --http-port <n>  the hqtt port to listen to
+    -p, --http-port <n>  the http port to listen to
+    -a, --coap-port <n>  the coap port to listen to
     -d, --db <path>      the path were to store the database
     -c, --config <c>     the config file to use (override every other
      option)
@@ -87,6 +89,14 @@ Reading the published value is an HTTP GET away:
 $ curl http://localhost:3000/topics/hello-from-mqtt
 world
 ```
+
+### Publishing from CoAP to MQTT
+
+TO BE DONE!
+
+### Publishing MQTT to CoAP
+
+TO BE DONE!
 
 ## Configuration
 
@@ -136,7 +146,7 @@ months:
 * [ ] Document configuration options.
 * [ ] Add WebSocket and Server-Sent Events support.
 * [ ] Add a Web App for reading and writing.
-* [ ] Add CoAP support.
+* [x] Add CoAP support.
 * [ ] Standalone persistence layer.
 
 Any help is very welcome, so feel free to submit a pull-request.
