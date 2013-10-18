@@ -29,6 +29,18 @@ describe("Ponte as a CoAP API", function() {
     });
   });
 
+  it("should GET an unknown path and return a 4.04", function(done) {
+    var req = coap.request({
+      port: settings.coap.port,
+      pathname: "/hello"
+    }).end();
+
+    req.on('response', function(res) {
+      expect(res.code).to.eql('4.04');
+      done();
+    });
+  });
+
   it("should PUT a topic and return a 2.04 (changed)", function(done) {
     var req = coap.request({
       port: settings.coap.port,
