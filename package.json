@@ -1,7 +1,7 @@
 {
   "name": "ponte",
-  "version": "0.0.3",
-  "description": "An M2M/IoT bridge for REST developers",
+  "version": "0.0.4",
+  "description": "The Internet of Things Bridge for REST developers",
   "main": "index.js",
   "bin": {
     "ponte": "./bin/ponte"
