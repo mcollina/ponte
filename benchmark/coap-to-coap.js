@@ -22,6 +22,7 @@ var coap = require("coap")
                     start = Date.now();
                     req = coap.request({
                       pathname: "/topics/hello",
+		      hostname: "127.0.0.1",
                       method: "PUT"
                     }).end("done")
                   }
@@ -42,6 +43,7 @@ var coap = require("coap")
 
                var req = coap.request({ 
                  pathname: "/topics/hello",
+		 hostname: '127.0.0.1',
                  observe: true
                }).end();
 

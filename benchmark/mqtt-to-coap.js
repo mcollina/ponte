@@ -1,7 +1,7 @@
 
 var coap = require("coap")
   , mqtt = require("mqtt")
-  , total = 5000
+  , total = 10000
   , print = function(text) {
               process.stdout.write(text + "\n");
             }
