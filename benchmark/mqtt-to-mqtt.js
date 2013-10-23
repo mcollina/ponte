@@ -1,6 +1,6 @@
 
 var mqtt = require("mqtt")
-  , total = 5000
+  , total = 10000
   , print = function(text) {
               process.stdout.write(text + "\n");
             }
@@ -25,7 +25,9 @@ var mqtt = require("mqtt")
                     publisher.publish("/hello", "world", { qos: 1 }, function() {
                       console.error("done");
                       publisher.end();
-                      process.exit(0);
+		      setTimeout(function() {
+                        process.exit(0);
+		      }, 10000)
                     });
                   }
                 }

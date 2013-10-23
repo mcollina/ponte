@@ -1,6 +1,6 @@
 
 var coap = require("coap")
-  , total = 5000
+  , total = 10000
   , print = function(text) {
               process.stdout.write(text + "\n");
             }
