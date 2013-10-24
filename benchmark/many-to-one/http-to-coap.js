@@ -1,7 +1,8 @@
 
 var coap = require("coap")
+  , async = require("async")
   , request = require("superagent")
-  , total = 500
+  , total = 10000
   , received = 0
   , print = function(text) {
               process.stdout.write(text + "\n");
@@ -12,7 +13,8 @@ var coap = require("coap")
                   console.error("all client connected, sending the message");
                   start = Date.now();
                   
-                  for (i = 0; i < total; i++)
+                  async.timesSeries(total, function(id, cb) { 
+	            setTimeout(cb, 1)
                     request
                         .put('http://localhost:3000/topics/hello')
                         .send("world")
@@ -21,6 +23,7 @@ var coap = require("coap")
                           //  console.error("sent", sent)
                           //}
                         });
+}, function() {});
                 }
 
 coap.request({

@@ -1,6 +1,7 @@
 
 var coap = require("coap")
-  , total = 500
+  , async = require("async")
+  , total = 10000
   , received = 0
   , print = function(text) {
               process.stdout.write(text + "\n");
@@ -11,11 +12,13 @@ var coap = require("coap")
                   console.error("all client connected, sending the message");
                   start = Date.now();
                   
-                  for (i = 0; i < total; i++)
+                  async.timesSeries(total, function(id, cb) { 
                     coap.request({
                       method: "PUT",
                       pathname: "/topics/hello"
                     }).end("world")
+	            setImmediate(cb)
+		 }, function() {})
                 }
 
 coap.request({

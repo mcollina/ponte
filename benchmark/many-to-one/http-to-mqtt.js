@@ -1,7 +1,8 @@
 
 var mqtt = require("mqtt")
   , request = require("superagent")
-  , total = 500
+  , async = require("async")
+  , total = 10000
   , sent = 0
   , received = 0
   , listener = mqtt.createClient()
@@ -13,7 +14,8 @@ var mqtt = require("mqtt")
                   console.error("client connected, sending the message");
                   start = Date.now();
                   
-                  for (i = 0; i < total; i++)
+                  async.timesSeries(total, function(id, cb) { 
+	            setTimeout(cb, 1)
                     request
                         .put('http://localhost:3000/topics/hello')
                         .send("world")
@@ -22,6 +24,7 @@ var mqtt = require("mqtt")
                           //  console.error("sent", sent)
                           //}
                         });
+}, function() {});
                 }
 
 request
@@ -49,3 +52,5 @@ request
       }
     });
   });
+
+require('http').globalAgent.maxSockets = 20000;

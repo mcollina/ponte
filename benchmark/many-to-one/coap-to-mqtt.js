@@ -1,7 +1,8 @@
 
 var coap = require("coap")
   , mqtt = require("mqtt")
-  , total = 500
+  , async = require("async")
+  , total = 10000
   , received = 0
   , listener = mqtt.createClient()
   , print = function(text) {
@@ -11,12 +12,14 @@ var coap = require("coap")
   , publish = function() {
                   console.error("all client connected, sending the message");
                   start = Date.now();
-                  
-                  for (i = 0; i < total; i++)
+
+                  async.timesSeries(total, function(id, cb) { 
                     coap.request({
                       method: "PUT",
                       pathname: "/topics/hello"
                     }).end("world")
+	            setImmediate(cb)
+		 }, function() {})
                 }
 
 listener.subscribe("hello", publish);

@@ -1,7 +1,8 @@
 
 var mqtt = require("mqtt")
   , coap = require("coap")
-  , total = 500
+  , async = require("async")
+  , total = 10000
   , received = 0
   , print = function(text) {
               process.stdout.write(text + "\n");
@@ -18,8 +19,12 @@ var mqtt = require("mqtt")
                     console.error("all client connected, sending the message");
                     start = Date.now();
                     
-                    for (i = 0; i < publishers.length; i++)
-                      publishers[i].publish({ topic: "hello", payload: "world", qos: 1, messageId: 42, retain: true })
+		    async.eachSeries(publishers, function(pub, cb) {
+                      setTimeout(function() {
+                      pub.publish({ topic: "hello", payload: "world", qos: 0, messageId: 42, retain: true })
+cb()
+}, 1)
+                    })
                   }
                 }
   , i = 0
