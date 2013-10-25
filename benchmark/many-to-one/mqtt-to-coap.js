@@ -19,11 +19,9 @@ var mqtt = require("mqtt")
                     console.error("all client connected, sending the message");
                     start = Date.now();
                     
-		    async.eachSeries(publishers, function(pub, cb) {
-                      setTimeout(function() {
+		    async.each(publishers, function(pub, cb) {
                       pub.publish({ topic: "hello", payload: "world", qos: 0, messageId: 42, retain: true })
 cb()
-}, 1)
                     })
                   }
                 }
