@@ -8,21 +8,28 @@ var coap = require("coap")
               process.stdout.write(text + "\n");
             }
   , start = null
+  , doReq = function() {
+                    request
+                        .put('http://localhost:3000/topics/hello')
+                        .send("world")
+                        .end(function(error, res){
+			  if (error) {
+setTimeout(doReq(), 10)
+console.error(error)
+}
+                          //if (sent++ % (total / 10)) {
+                          //  console.error("sent", sent)
+                          //}
+                        });
+}
   , publish = function() {
                   //print("publishing");
                   console.error("all client connected, sending the message");
                   start = Date.now();
                   
-                  async.timesSeries(total, function(id, cb) { 
-	            setTimeout(cb, 1)
-                    request
-                        .put('http://localhost:3000/topics/hello')
-                        .send("world")
-                        .end(function(error, res){
-                          //if (sent++ % (total / 10)) {
-                          //  console.error("sent", sent)
-                          //}
-                        });
+                  async.times(total, function(id, cb) { 
+setImmediate(doReq)
+setImmediate(cb)
 }, function() {});
                 }
 
