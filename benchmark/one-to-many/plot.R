@@ -34,6 +34,7 @@ matplot(data, type="l",
         col=colors,
         cex=1.5,
         lwd=2,
+        ylim=c(0, 6000),
         xlab="clients", ylab="milliseconds")
 
 legend("topleft",

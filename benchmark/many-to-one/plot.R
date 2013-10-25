@@ -33,6 +33,7 @@ matplot(data, type="l",
         lty=lines,
         col=colors,
         cex=1.5,
+        ylim=c(0, 16000),
         lwd=2,
         xlab="clients", ylab="milliseconds")
 
