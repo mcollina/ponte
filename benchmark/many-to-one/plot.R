@@ -35,7 +35,7 @@ matplot(data, type="l",
         cex=1.5,
         ylim=c(0, 16000),
         lwd=2,
-        xlab="clients", ylab="milliseconds")
+        xlab="messages", ylab="milliseconds")
 
 legend("topleft",
        legend=columns,
