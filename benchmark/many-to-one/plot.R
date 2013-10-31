@@ -5,10 +5,10 @@ preFiles <- 1
 output <- args[1]
 
 #colors <- topo.colors(length(args) - preFiles)
-colors <- gray(1:(length(args) - preFiles) / (length(args) - preFiles) * 3 / 5)
-colors <- rainbow(length(args) - preFiles)
-lines <- 1 #2:6 #c(2, 4, 6, 1, 3)
-#lines <- c("solid", "dashed", "dotted")
+colors <- gray(1:(length(args) - preFiles) / (length(args) - preFiles + 1))
+#colors <- rainbow(length(args) - preFiles)
+#lines <- c("311311", "33", "4242", "22") #2:6 #c(2, 4, 6, 1, 3)
+lines <- 1
 totalFiles <- (preFiles + 1):length(args)
 pch <- 1:(length(args) - preFiles)
 
@@ -28,18 +28,20 @@ data <- subset(data, select=-c(1))
 
 columns <- factor(colnames(data))
 
-quartz("Rila")
-matplot(data, type="l",
+quartz("Ponte")
+matplot(data,
+        type="l",
         lty=lines,
         col=colors,
-        cex=1.5,
         ylim=c(0, 16000),
-        lwd=2,
+        cex.lab=1.5,
+        lwd=5,
         xlab="messages", ylab="milliseconds")
 
 legend("topleft",
        legend=columns,
-       col=colors, lty=lines)
+       cex=1.5,
+       col=colors, lty=lines, lwd=5)
 
 dev.copy(pdf,output)
 dev.off()
