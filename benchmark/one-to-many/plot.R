@@ -5,8 +5,8 @@ preFiles <- 1
 output <- args[1]
 
 #colors <- topo.colors(length(args) - preFiles)
-colors <- gray(1:(length(args) - preFiles) / (length(args) - preFiles + 1))
-#colors <- rainbow(length(args) - preFiles)
+#colors <- gray(1:(length(args) - preFiles) / (length(args) - preFiles + 1))
+colors <- rainbow(length(args) - preFiles)
 lines <- 1 #2:6 #c(2, 4, 6, 1, 3)
 #lines <- c("solid", "dashed", "dotted")
 totalFiles <- (preFiles + 1):length(args)
