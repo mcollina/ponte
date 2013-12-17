@@ -20,7 +20,7 @@ describe("Ponte as a CoAP API", function() {
   it("should GET an unknown topic and return a 4.04", function(done) {
     var req = coap.request({
       port: settings.coap.port,
-      pathname: "/topics/hello"
+      pathname: "/r/hello"
     }).end();
 
     req.on('response', function(res) {
@@ -44,7 +44,7 @@ describe("Ponte as a CoAP API", function() {
   it("should PUT a topic and return a 2.04 (changed)", function(done) {
     var req = coap.request({
       port: settings.coap.port,
-      pathname: "/topics/hello",
+      pathname: "/r/hello",
       method: 'PUT'
     }).end('hello world');
 
@@ -57,12 +57,12 @@ describe("Ponte as a CoAP API", function() {
   it("should PUT a topic and set a 'Location-Path' option", function(done) {
     var req = coap.request({
       port: settings.coap.port,
-      pathname: "/topics/hello",
+      pathname: "/r/hello",
       method: 'PUT'
     }).end('hello world');
 
     req.on('response', function(res) {
-      expect(res.headers).to.have.property('Location-Path', '/topics/hello');
+      expect(res.headers).to.have.property('Location-Path', '/r/hello');
       done();
     });
   });
@@ -70,14 +70,14 @@ describe("Ponte as a CoAP API", function() {
   it("should PUT a topic and return a 2.04 (changed) if the topic existed", function(done) {
     var req = coap.request({
       port: settings.coap.port,
-      pathname: "/topics/hello",
+      pathname: "/r/hello",
       method: 'PUT'
     }).end('hello world')
 
     req.on('response', function(res) {
       req = coap.request({
         port: settings.coap.port,
-        pathname: "/topics/hello",
+        pathname: "/r/hello",
         method: 'PUT'
       }).end('hello matteo');
 
@@ -91,14 +91,14 @@ describe("Ponte as a CoAP API", function() {
   it("should PUT and GET a topic and its payload", function(done) {
     var req = coap.request({
       port: settings.coap.port,
-      pathname: "/topics/hello",
+      pathname: "/r/hello",
       method: 'PUT'
     }).end('hello world');
 
     req.on('response', function(res) {
       req = coap.request({
         port: settings.coap.port,
-        pathname: "/topics/hello",
+        pathname: "/r/hello",
       }).end();
 
       req.on('response', function(res) {
@@ -117,7 +117,7 @@ describe("Ponte as a CoAP API", function() {
         .subscribe("hello", function() {
           var req = coap.request({
             port: settings.coap.port,
-            pathname: "/topics/hello",
+            pathname: "/r/hello",
             method: 'PUT'
           }).end('world');
         })
@@ -129,10 +129,10 @@ describe("Ponte as a CoAP API", function() {
         });
   });
 
-  it("should allow to observe topics", function(done) {
+  it("should allow to observe r", function(done) {
     var req = coap.request({
       port: settings.coap.port,
-      pathname: "/topics/hello",
+      pathname: "/r/hello",
       method: 'PUT'
     }).end('abcdef')
     var req2
@@ -141,7 +141,7 @@ describe("Ponte as a CoAP API", function() {
 
       req2 = coap.request({
         port: settings.coap.port,
-        pathname: "/topics/hello",
+        pathname: "/r/hello",
         method: 'GET',
         observe: true
       });

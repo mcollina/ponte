@@ -62,7 +62,7 @@ $ ponte -v | bunyan
 
 Publish from HTTP:
 ```
-$ curl -X PUT -d 'world' http://localhost:3000/topics/hello
+$ curl -X PUT -d 'world' http://localhost:3000/resources/hello
 ```
 
 The messages from HTTP are _retained_, which means that are sent to

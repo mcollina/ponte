@@ -19,32 +19,32 @@ describe("Ponte as an HTTP API", function() {
 
   it("should GET an unknown topic and return a 404", function(done) {
     request(instance.http.server)
-      .get("/topics/hello")
+      .get("/resources/hello")
       .expect(404, done);
   });
 
   it("should PUT a topic and return a 204", function(done) {
     request(instance.http.server)
-      .put("/topics/hello")
+      .put("/resources/hello")
       .send("hello world")
       .expect(204, done);
   });
 
   it("should PUT a topic and return a Location header", function(done) {
     request(instance.http.server)
-      .put("/topics/hello")
+      .put("/resources/hello")
       .send("hello world")
-      .expect('Location', '/topics/hello', done)
+      .expect('Location', '/resources/hello', done)
   });
 
   it("should PUT and GET a topic and its payload", function(done) {
     request(instance.http.server)
-      .put("/topics/hello")
+      .put("/resources/hello")
       .set("content-type", "text/plain")
       .send("hello world")
       .expect(204, function() {
         request(instance.http.server)
-          .get("/topics/hello")
+          .get("/resources/hello")
           .expect(200, "hello world", done);
       });
   });
@@ -54,7 +54,7 @@ describe("Ponte as an HTTP API", function() {
 
       .subscribe("hello", function() {
         request(instance.http.server)
-          .put("/topics/hello")
+          .put("/resources/hello")
           .send("world")
           .end(function(err) {
             if (err) {

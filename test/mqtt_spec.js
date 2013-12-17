@@ -34,7 +34,7 @@ describe("Ponte as an MQTT server", function() {
     client
       .publish("hello", "world", { retain: true, qos: 1 }, function() {
         request(instance.http.server)
-          .get("/topics/hello")
+          .get("/resources/hello")
           .expect(200, "world", done);
       });
   });
