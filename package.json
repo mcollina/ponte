@@ -17,7 +17,13 @@
     "url": "http://github.com/mcollina/ponte/issues"
   },
   "author": "Matteo Collina <hello@matteocollina.com>",
-  "license": "BSD",
+  "license": [{
+    "type": "Eclipse Distribution License 1.0 (EDL-1.0) (BSD 3-Clause)",
+    "url": "http://www.eclipse.org/org/documents/edl-v10.html"
+  },{
+    "type": "Eclipse Public License 1.0 (EPL-1.0)",
+    "url": "http://www.eclipse.org/org/documents/epl-v10.html"
+  }],
   "devDependencies": {
     "sinon-chai": "~2.4.0",
     "tmp": "0.0.21",
