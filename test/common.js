@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 18-dec-2013 University of Bologna
+ * Copyright (c) 18-dec-2013 Matteo Collina
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * and Eclipse Distribution License v1.0 which accompany this distribution.
