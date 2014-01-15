@@ -7,7 +7,6 @@
     "afterEach": false,
     "beforeEach": false,
     "describe": false,
-    "mosca": false,
     "expect": false,
     "before": false,
     "moscaSettings": false,

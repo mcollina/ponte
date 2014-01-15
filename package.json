@@ -7,8 +7,17 @@
     "ponte": "./bin/ponte"
   },
   "scripts": {
-    "test": "make bail"
+    "test": "mocha --recursive --bail --reporter spec test",
+    "ci": "mocha --recursive --bail --watch test",
+    "jshint-lib": "jshint lib/*.js",
+    "jshint-test": "jshint test/*.js",
+    "start": "./bin/ponte -v | bunyan"
   },
+  "pre-commit": [
+    "jshint-lib",
+    "jshint-test",
+    "test"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/mcollina/ponte.git"
@@ -25,7 +34,9 @@
     "sinon": "~1.7.3",
     "supertest": "~0.8.0",
     "chai": "~1.8.1",
-    "mocha": "~1.13.0"
+    "mocha": "~1.13.0",
+    "pre-commit": "0.0.4",
+    "jshint": "~2.4.1"
   },
   "dependencies": {
     "express": "~3.4.0",
