@@ -129,7 +129,7 @@ describe("Ponte as a CoAP API", function() {
         });
   });
 
-  it("should allow to observe r", function(done) {
+  it("should allow to observe resources", function(done) {
     var req = coap.request({
       port: settings.coap.port,
       pathname: "/r/hello",
