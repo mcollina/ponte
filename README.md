@@ -70,7 +70,7 @@ every new subscriber.
 
 Subscribe using `mosquitto_sub` ([mosquitto](http://mosquitto.org)):
 ```
-$ mosquitto_sub -t "hello" -v
+$ mosquitto_sub -t "/hello" -v
 hello world
 ```
 
@@ -81,12 +81,12 @@ a MQTT client needs to set the _retain_ flag.
 This is how it is done using `mosquitto_pub`:
 
 ```
-$ mosquitto_pub -t hello-from-mqtt -m "world" -r
+$ mosquitto_pub -t /hello-from-mqtt -m "world" -r
 ```
 
 Reading the published value is an HTTP GET away:
 ```
-$ curl http://localhost:3000/topics/hello-from-mqtt
+$ curl http://localhost:3000/resources/hello-from-mqtt
 world
 ```
 
