@@ -61,6 +61,7 @@ $ ponte -v | bunyan
 ### Publishing from HTTP to MQTT
 
 Publish from HTTP:
+
 ```
 $ curl -X PUT -d 'world' http://localhost:3000/resources/hello
 ```
@@ -69,9 +70,10 @@ The messages from HTTP are _retained_, which means that are sent to
 every new subscriber.
 
 Subscribe using `mosquitto_sub` ([mosquitto](http://mosquitto.org)):
+
 ```
-$ mosquitto_sub -t "hello" -v
-hello world
+$ mosquitto_sub -t "/hello" -v
+/hello world
 ```
 
 ### Publishing from MQTT to HTTP
@@ -81,22 +83,79 @@ a MQTT client needs to set the _retain_ flag.
 This is how it is done using `mosquitto_pub`:
 
 ```
-$ mosquitto_pub -t hello-from-mqtt -m "world" -r
+$ mosquitto_pub -t /hello-from-mqtt -m "world" -r
 ```
 
 Reading the published value is an HTTP GET away:
+
 ```
-$ curl http://localhost:3000/topics/hello-from-mqtt
+$ curl http://localhost:3000/resources/hello-from-mqtt
 world
 ```
 
 ### Publishing from CoAP to MQTT
 
-TO BE DONE!
+You can send CoAP messages from the command line using [coap-cli](http://github.com/mcollina/coap-cli)
+In the following example we do a CoAP PUT to a resource:
+
+```
+$ echo -n 'world' | coap put coap://localhost/r/hello
+```
+
+Subscribe using `mosquitto_sub` ([mosquitto](http://mosquitto.org)):
+
+```
+$ mosquitto_sub -t "/hello" -v
+/hello world
+```
 
 ### Publishing MQTT to CoAP
 
-TO BE DONE!
+In order to publish a message that can be read from CoAP,
+a MQTT client needs to set the _retain_ flag.
+This is how it is done using `mosquitto_pub`:
+
+```
+$ mosquitto_pub -t /hello-from-mqtt -m "world" -r
+```
+
+In order to receive the live updates with CoAP, we need to
+use the observe switch:
+
+```
+$ coap -o coap://localhost/r/hello-from-mqtt
+```
+
+## Embedding
+
+__Ponte__ can be run in embbedded mode, by listening to specific events:
+
+```javascript
+var ponte = require("ponte");
+var opts = {
+  logger: {
+    level: 'info'
+  },
+  http: {
+    port: 3000 // tcp
+  },
+  mqtt: {
+    port: 3001 // tcp
+  },
+  coap: {
+    port: 3000 // udp
+  },
+  persistence: {
+    type: 'level',
+    path: './db'
+  }
+};
+var server = ponte(opts);
+
+server.on("updated", function(resource, buffer) {
+  console.log("Resource Updated", resource, buffer);
+});
+```
 
 ## Configuration
 
@@ -141,7 +200,7 @@ These are the new features you should expect in the coming
 months:
 
 * [ ] Better bootstrap sequence.
-* [ ] Allow and document embedding inside other Node apps.
+* [x] Allow and document embedding inside other Node apps.
 * [ ] Add Web Hooks support.
 * [ ] Document configuration options.
 * [ ] Add WebSocket and Server-Sent Events support.

@@ -1,14 +1,23 @@
 {
   "name": "ponte",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "The Internet of Things Bridge for REST developers",
-  "main": "index.js",
+  "main": "lib/ponte.js",
   "bin": {
     "ponte": "./bin/ponte"
   },
   "scripts": {
-    "test": "make bail"
+    "test": "mocha --recursive --bail --reporter spec test",
+    "ci": "mocha --recursive --bail --watch test",
+    "jshint-lib": "jshint lib/*.js",
+    "jshint-test": "jshint test/*.js",
+    "start": "./bin/ponte -v | bunyan"
   },
+  "pre-commit": [
+    "jshint-lib",
+    "jshint-test",
+    "test"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/mcollina/ponte.git"
@@ -26,23 +35,25 @@
   }],
   "devDependencies": {
     "sinon-chai": "~2.4.0",
-    "tmp": "0.0.21",
+    "tmp": "0.0.23",
     "superagent": "~0.15.5",
     "sinon": "~1.7.3",
-    "supertest": "~0.8.0",
+    "supertest": "~0.8.3",
     "chai": "~1.8.1",
-    "mocha": "~1.13.0"
+    "mocha": "~1.17.0",
+    "pre-commit": "0.0.4",
+    "jshint": "~2.4.1"
   },
   "dependencies": {
-    "express": "~3.4.0",
-    "ascoltatori": "~0.11.1",
-    "mosca": "~0.14.0",
-    "commander": "~2.0.0",
-    "bunyan": "~0.21.4",
-    "mqtt": "~0.3.1",
+    "express": "~3.4.8",
+    "ascoltatori": "~0.12.2",
+    "mosca": "~0.15.0",
+    "commander": "~2.1.0",
+    "bunyan": "~0.22.1",
+    "mqtt": "~0.3.7",
     "async": "~0.2.9",
     "callback-stream": "~1.0.0",
-    "xtend": "~2.1.0",
-    "coap": "~0.4.6"
+    "xtend": "~2.1.2",
+    "coap": "~0.5.3"
   }
 }

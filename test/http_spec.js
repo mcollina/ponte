@@ -14,7 +14,7 @@
  *******************************************************************************/
 
 var request = require("supertest");
-var ponte = require("../");
+var ponte = require("../lib/ponte");
 var mqtt = require("mqtt");
 
 describe("Ponte as an HTTP API", function() {
@@ -48,7 +48,7 @@ describe("Ponte as an HTTP API", function() {
     request(instance.http.server)
       .put("/resources/hello")
       .send("hello world")
-      .expect('Location', '/resources/hello', done)
+      .expect('Location', '/resources/hello', done);
   });
 
   it("should PUT and GET a topic and its payload", function(done) {
@@ -82,5 +82,19 @@ describe("Ponte as an HTTP API", function() {
         expect(payload).to.eql("world");
         done();
       });
+  });
+
+  it("should emit an 'updated' event after a put", function(done) {
+    request(instance.http.server)
+      .put("/resources/hello")
+      .set("content-type", "text/plain")
+      .send("hello world")
+      .end(function() {});
+
+    instance.on('updated', function(resource, value) {
+      expect(resource).to.eql("/hello");
+      expect(value).to.eql(new Buffer("hello world"));
+      done();
+    });
   });
 });

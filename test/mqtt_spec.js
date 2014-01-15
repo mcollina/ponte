@@ -15,7 +15,7 @@
 
 var request = require("supertest");
 var mqtt = require("mqtt");
-var ponte = require("../");
+var ponte = require("../lib/ponte");
 
 describe("Ponte as an MQTT server", function() {
 
@@ -51,5 +51,21 @@ describe("Ponte as an MQTT server", function() {
           .get("/resources/hello")
           .expect(200, "world", done);
       });
+  });
+
+  it("should emit an 'updated' event after a publish", function(done) {
+
+    var client = mqtt.createClient(settings.mqtt.port);
+    client.publish("/hello", "world",
+                   { retain: true, qos: 1 },
+                   function() {
+      client.end();
+    });
+
+    instance.on('updated', function(resource, value) {
+      expect(resource).to.eql("/hello");
+      expect(value).to.eql(new Buffer("world"));
+      done();
+    });
   });
 });

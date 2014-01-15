@@ -13,7 +13,7 @@
  *    Matteo Collina - initial API and implementation and/or initial documentation
  *******************************************************************************/
 
-var ponte = require("../");
+var ponte = require("../lib/ponte");
 var mqtt = require("mqtt");
 var coap = require("coap");
 var callback = require("callback-stream");
@@ -87,7 +87,7 @@ describe("Ponte as a CoAP API", function() {
       port: settings.coap.port,
       pathname: "/r/hello",
       method: 'PUT'
-    }).end('hello world')
+    }).end('hello world');
 
     req.on('response', function(res) {
       req = coap.request({
@@ -124,7 +124,7 @@ describe("Ponte as a CoAP API", function() {
           done();
         }));
       });
-    })
+    });
   });
 
   it("should publish a value to MQTT after PUT", function(done) {
@@ -144,17 +144,16 @@ describe("Ponte as a CoAP API", function() {
         });
   });
 
-  it("should allow to observe r", function(done) {
+  it("should allow to observe resources", function(done) {
     var req = coap.request({
       port: settings.coap.port,
       pathname: "/r/hello",
       method: 'PUT'
-    }).end('abcdef')
-    var req2
+    }).end('abcdef');
 
     req.on('response', function(res) {
 
-      req2 = coap.request({
+      var req2 = coap.request({
         port: settings.coap.port,
         pathname: "/r/hello",
         method: 'GET',
@@ -178,11 +177,25 @@ describe("Ponte as a CoAP API", function() {
           res.once('data', function(data) {
             expect(data.toString()).to.eql('world');
             res.once('data', function(data) {
-              done()
+              done();
             });
           });
         });
       });
+    });
+  });
+
+  it("should emit an 'updated' event after a put", function(done) {
+    var req = coap.request({
+      port: settings.coap.port,
+      pathname: "/r/hello",
+      method: "PUT"
+    }).end("hello world");
+
+    instance.on('updated', function(resource, value) {
+      expect(resource).to.eql("/hello");
+      expect(value).to.eql(new Buffer("hello world"));
+      done();
     });
   });
 });

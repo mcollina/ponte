@@ -15,7 +15,7 @@
  *    Matteo Collina - initial API and implementation and/or initial documentation
  *******************************************************************************/
 
-require("../").cli(process.argv, function(err) {
+require("../lib/ponte").cli(process.argv, function(err) {
   if (err) {
     console.log(err);
     process.exit(1);
