@@ -169,4 +169,18 @@ describe("Ponte as a CoAP API", function() {
       });
     });
   });
+
+  it("should emit an 'updated' event after a put", function(done) {
+    var req = coap.request({
+      port: settings.coap.port,
+      pathname: "/r/hello",
+      method: "PUT"
+    }).end("hello world");
+
+    instance.on('updated', function(resource, value) {
+      expect(resource).to.eql("/hello");
+      expect(value).to.eql(new Buffer("hello world"));
+      done();
+    });
+  });
 });

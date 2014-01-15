@@ -38,4 +38,20 @@ describe("Ponte as an MQTT server", function() {
           .expect(200, "world", done);
       });
   });
+
+  it("should emit an 'updated' event after a publish", function(done) {
+
+    var client = mqtt.createClient(settings.mqtt.port);
+    client.publish("/hello", "world",
+                   { retain: true, qos: 1 },
+                   function() {
+      client.end();
+    });
+
+    instance.on('updated', function(resource, value) {
+      expect(resource).to.eql("/hello");
+      expect(value).to.eql(new Buffer("world"));
+      done();
+    });
+  });
 });

@@ -69,4 +69,18 @@ describe("Ponte as an HTTP API", function() {
         done();
       });
   });
+
+  it("should emit an 'updated' event after a put", function(done) {
+    request(instance.http.server)
+      .put("/resources/hello")
+      .set("content-type", "text/plain")
+      .send("hello world")
+      .end(function() {});
+
+    instance.on('updated', function(resource, value) {
+      expect(resource).to.eql("/hello");
+      expect(value).to.eql(new Buffer("hello world"));
+      done();
+    });
+  });
 });

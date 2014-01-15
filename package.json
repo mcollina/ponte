@@ -32,9 +32,9 @@
     "tmp": "0.0.23",
     "superagent": "~0.15.5",
     "sinon": "~1.7.3",
-    "supertest": "~0.8.0",
+    "supertest": "~0.8.3",
     "chai": "~1.8.1",
-    "mocha": "~1.13.0",
+    "mocha": "~1.17.0",
     "pre-commit": "0.0.4",
     "jshint": "~2.4.1"
   },
