@@ -126,6 +126,37 @@ use the observe switch:
 $ coap -o coap://localhost/r/hello-from-mqtt
 ```
 
+## Embedding
+
+__Ponte__ can be run in embbedded mode, by listening to specific events:
+
+```javascript
+var ponte = require("ponte");
+var opts = {
+  logger: {
+    level: 'info'
+  },
+  http: {
+    port: 3000 // tcp
+  },
+  mqtt: {
+    port: 3001 // tcp
+  },
+  coap: {
+    port: 3000 // udp
+  },
+  persistence: {
+    type: 'level',
+    path: './db'
+  }
+};
+var server = ponte(opts);
+
+server.on("updated", function(resource, buffer) {
+  console.log("Resource Updated", resource, buffer);
+});
+```
+
 ## Configuration
 
 TO BE DONE!
@@ -169,7 +200,7 @@ These are the new features you should expect in the coming
 months:
 
 * [ ] Better bootstrap sequence.
-* [ ] Allow and document embedding inside other Node apps.
+* [x] Allow and document embedding inside other Node apps.
 * [ ] Add Web Hooks support.
 * [ ] Document configuration options.
 * [ ] Add WebSocket and Server-Sent Events support.
