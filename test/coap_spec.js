@@ -1,4 +1,4 @@
-var ponte = require("../");
+var ponte = require("../lib/ponte");
 var mqtt = require("mqtt");
 var coap = require("coap");
 var callback = require("callback-stream");

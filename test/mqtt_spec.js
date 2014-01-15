@@ -1,7 +1,7 @@
 
 var request = require("supertest");
 var mqtt = require("mqtt");
-var ponte = require("../");
+var ponte = require("../lib/ponte");
 
 describe("Ponte as an MQTT server", function() {
 

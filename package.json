@@ -2,7 +2,7 @@
   "name": "ponte",
   "version": "0.0.6",
   "description": "The Internet of Things Bridge for REST developers",
-  "main": "index.js",
+  "main": "lib/ponte.js",
   "bin": {
     "ponte": "./bin/ponte"
   },

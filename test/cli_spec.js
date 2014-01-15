@@ -1,5 +1,5 @@
 
-var ponte = require("../");
+var ponte = require("../lib/ponte");
 var async = require("async");
 var tmp   = require("tmp");
 var mosca = require("mosca");
