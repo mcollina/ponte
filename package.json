@@ -40,12 +40,13 @@
   },
   "dependencies": {
     "mosca": "~0.20.0",
-    "commander": "~2.1.0",
-    "bunyan": "~0.22.1",
-    "mqtt": "~0.3.7",
-    "async": "~0.2.9",
-    "callback-stream": "~1.0.0",
-    "xtend": "~2.1.2",
-    "coap": "~0.5.3"
+    "ascoltatori": "~0.14.0",
+    "commander": "~2.2.0",
+    "bunyan": "~0.22.3",
+    "mqtt": "~0.3.8",
+    "async": "~0.7.0",
+    "callback-stream": "~1.0.2",
+    "xtend": "~3.0.0",
+    "coap": "~0.6.0"
   }
 }
