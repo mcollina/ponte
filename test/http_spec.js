@@ -66,7 +66,7 @@ describe("Ponte as an HTTP API", function() {
   it("should publish a value to MQTT after PUT", function(done) {
     mqtt.createClient(settings.mqtt.port)
 
-      .subscribe("/hello", function() {
+      .subscribe("hello", function() {
         request(instance.http.server)
           .put("/resources/hello")
           .send("world")
@@ -78,7 +78,7 @@ describe("Ponte as an HTTP API", function() {
       })
 
       .on("message", function(topic, payload) {
-        expect(topic).to.eql("/hello");
+        expect(topic).to.eql("hello");
         expect(payload).to.eql("world");
         done();
       });
@@ -92,7 +92,7 @@ describe("Ponte as an HTTP API", function() {
       .end(function() {});
 
     instance.on('updated', function(resource, value) {
-      expect(resource).to.eql("/hello");
+      expect(resource).to.eql("hello");
       expect(value).to.eql(new Buffer("hello world"));
       done();
     });
