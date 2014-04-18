@@ -72,8 +72,8 @@ every new subscriber.
 Subscribe using `mosquitto_sub` ([mosquitto](http://mosquitto.org)):
 
 ```
-$ mosquitto_sub -t "/hello" -v
-/hello world
+$ mosquitto_sub -t "hello" -v
+hello world
 ```
 
 ### Publishing from MQTT to HTTP
@@ -83,7 +83,7 @@ a MQTT client needs to set the _retain_ flag.
 This is how it is done using `mosquitto_pub`:
 
 ```
-$ mosquitto_pub -t /hello-from-mqtt -m "world" -r
+$ mosquitto_pub -t hello-from-mqtt -m "world" -r
 ```
 
 Reading the published value is an HTTP GET away:
@@ -105,8 +105,8 @@ $ echo -n 'world' | coap put coap://localhost/r/hello
 Subscribe using `mosquitto_sub` ([mosquitto](http://mosquitto.org)):
 
 ```
-$ mosquitto_sub -t "/hello" -v
-/hello world
+$ mosquitto_sub -t "hello" -v
+hello world
 ```
 
 ### Publishing MQTT to CoAP
@@ -116,7 +116,7 @@ a MQTT client needs to set the _retain_ flag.
 This is how it is done using `mosquitto_pub`:
 
 ```
-$ mosquitto_pub -t /hello-from-mqtt -m "world" -r
+$ mosquitto_pub -t hello-from-mqtt -m "world" -r
 ```
 
 In order to receive the live updates with CoAP, we need to
