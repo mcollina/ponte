@@ -32,9 +32,19 @@ describe("Ponte as an MQTT server", function() {
   it("should expose retained messages to HTTP", function(done) {
     var client = mqtt.createClient(settings.mqtt.port);
     client
-      .publish("/hello", "world", { retain: true, qos: 1 }, function() {
+      .publish("hello", "world", { retain: true, qos: 1 }, function() {
         request(instance.http.server)
           .get("/resources/hello")
+          .expect(200, "world", done);
+      });
+  });
+
+  it("should expose retained messages to HTTP (double slash)", function(done) {
+    var client = mqtt.createClient(settings.mqtt.port);
+    client
+      .publish("/hello", "world", { retain: true, qos: 1 }, function() {
+        request(instance.http.server)
+          .get("/resources//hello")
           .expect(200, "world", done);
       });
   });
